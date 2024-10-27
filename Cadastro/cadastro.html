@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="cadastro.css">
+    <script src="cadastro.js" defer></script>
+</head>
+<body>
+     <div class="square">
+		<i style="--clr:#ff0400;"></i>
+		<i style="--clr:#ffffff;"></i>
+		<i style="--clr:#45f3ff;"></i>
+    </div>
+    <button id="audioControl" onclick="toggleAudio()">🔊</button> 
+    <div class="box">
+        <div class="register">
+            <div class="registerBx">
+                <h2>
+                    <i class="fa-solid fa-user-plus"></i>
+                    Cadastro
+                    <i class="fa-solid fa-heart"></i>
+                </h2>
+                <input type="text" placeholder="Nome Completo">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Senha">
+                <input type="password" placeholder="Confirme a Senha">
+                <input type="submit" value="Cadastrar-se" onclick="window.location.href='login/login.html'" />
+                <button class="btn-google" onclick="signInWithGoogle()">Entrar com Google</button>
+                <div class="group">
+                    <span>Já possui uma conta?</span>
+                    <button class="btn-login" onclick="window.location.href='Login.html'">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
