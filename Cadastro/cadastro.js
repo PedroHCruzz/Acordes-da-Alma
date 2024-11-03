@@ -66,8 +66,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    userNameInput.addEventListener("input", validateUserName);
-    emailInput.addEventListener("input", validateEmail);
-    passwordInput.addEventListener("input", validatePassword);
-    confirmPasswordInput.addEventListener("input", validateConfirmPassword);
+window.registerUser = function() {
+    const isUserNameValid = validateUserName();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    const isConfirmPasswordValid = validateConfirmPassword();
+    
+   
+    if (isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+        alert("Cadastro realizado com sucesso!");
+        window.location.href = 'login.html'; 
+    }
+};
+
+
+userNameInput.addEventListener("input", validateUserName);
+emailInput.addEventListener("input", validateEmail);
+passwordInput.addEventListener("input", validatePassword);
+confirmPasswordInput.addEventListener("input", validateConfirmPassword);
 });
