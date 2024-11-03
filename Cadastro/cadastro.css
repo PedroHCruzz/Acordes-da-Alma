@@ -50,9 +50,13 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 70%;
+    margin-top: 50px;
     transform: translateY(126px);
     transition: 0.5s;
+    margin-bottom: 100px;
 } 
+
+
 
 @property --a {
     syntax: '<angle>';
@@ -128,21 +132,30 @@ body {
 }
 
 h2 {
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    margin-top: 400px;
-    margin-left: 15px;
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    margin-bottom: 0px;
+    margin-top: -180px;
 }
 
 
 
 
 h2 i {
+    font-size: 20px;
     color: #ff2770;
     text-shadow: none 0 0 5px #ff2770, 0 0 5px #ff2770;
-    margin-bottom: 60px;
+    justify-content: center;
+    justify-self: center;
+    margin-bottom: -220px;
     margin-top: 200px;
+
 }
 
 input {
