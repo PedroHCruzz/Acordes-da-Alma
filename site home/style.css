@@ -25,9 +25,9 @@
 .auth-buttons .cta:hover {
 	background-color: crimson;
 	color: white;
+	margin-bottom: 10px;
 }
 
-/* Responsividade para alinhamento dos botões no cabeçalho */
 @media (max-width: 768px) {
   .auth-buttons {
     flex-direction: column;
@@ -89,6 +89,7 @@ p {
 	margin-top: 30px;
 	transition: 0.3s ease;
 	transition-property: background-color, color;
+	margin-top: 35px;
 }
 .cta:hover {
 	color: white;
