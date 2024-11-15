@@ -10,7 +10,20 @@
 	gap: 10px;
 }
 
-.auth-buttons .cta {
+.auth-buttons .cadastro{
+	padding: 10px 20px;
+	font-size: 1.6rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	background-color: transparent;
+	color: white;
+	border: 2px solid white;
+	background-color: crimson;
+	cursor: pointer;
+	transition: 0.3s ease background-color, color;
+}
+
+.auth-buttons .login {
 	padding: 10px 20px;
 	font-size: 1.6rem;
 	text-transform: uppercase;
@@ -22,7 +35,14 @@
 	transition: 0.3s ease background-color, color;
 }
 
-.auth-buttons .cta:hover {
+
+.auth-buttons .cadastro:hover {
+	background-color: rgb(255, 255, 255);
+	color: rgb(255, 0, 0);
+	margin-bottom: 10px;
+}
+
+.auth-buttons .login:hover {
 	background-color: crimson;
 	color: white;
 	margin-bottom: 10px;
@@ -104,12 +124,11 @@ p {
 	font-size: 3rem;
 	text-transform: uppercase;
 	color: white;
-	margin-top: 20px;
+	margin-bottom: 4px;
 }
 .brand h1 span {
 	color: crimson;
 }
-
 
 #header {
 	position: fixed;
