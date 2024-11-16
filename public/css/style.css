@@ -256,12 +256,14 @@ p {
 }
 
 #hero {
-	background-image: url(./img/hero-bg.png);
+	background-image: url(meteora.jpg);
 	background-size: cover;
 	background-position: top center;
 	position: relative;
 	z-index: 1;
+	margin-bottom: 2px;
 }
+
 #hero::after {
 	background-image: image-set();
 	content: '';
