@@ -12,6 +12,7 @@ body{
     background-color: #eee;
     min-height: 100vh;
     font-family: 'Open Sans', sans-serif;
+    background-color: rgba(0, 0, 0, 0.662);
 }
 
 .card{
