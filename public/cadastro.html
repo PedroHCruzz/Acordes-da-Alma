@@ -13,15 +13,17 @@
         <div class="register">
             <div class="registerBx">
                 <h2>
-                <i class="fa-solid fa-right-to-bracket"></i>
-                Cadastro
-                <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Cadastro
+                    <i class="fa-solid fa-heart"></i>
                 </h2>
-                <input type="text" placeholder="Nome do Usuário">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Senha">
-                <input type="password" placeholder="Confirme a Senha">
-                <input type="submit" value="Cadastrar-se" onclick="window.location.href='login/login.html'" />
+                <form action="login.html" method="get"> 
+                    <input type="text" placeholder="Nome do Usuário" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Senha" required>
+                    <input type="password" placeholder="Confirme a Senha" required>
+                    <input type="submit" value="Cadastrar-se"> 
+                </form>
                 <div class="group">
                     <span>Já possui uma conta?</span>
                     <button class="btn-login" onclick="window.location.href='login.html'">Login</button>

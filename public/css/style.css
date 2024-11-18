@@ -48,6 +48,21 @@
 	margin-bottom: 10px;
 }
 
+.logout-btn {
+	background-color: transparent;
+	color: white;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .logout-btn:hover {
+	background-color: red;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+  }
+  
+
 @media (max-width: 768px) {
   .auth-buttons {
     flex-direction: column;
