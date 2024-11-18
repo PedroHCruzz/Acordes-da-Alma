@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="./js/login.js">
 </head>
 <body>
-     <div class="square">
-		<i style="--clr:#ff0400;"></i>
-		<i style="--clr:#ffffff;"></i>
-		<i style="--clr:#45f3ff;"></i>
+    <div class="square">
+        <i style="--clr:#ff0400;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#45f3ff;"></i>
     </div>
     <div class="box">
         <div class="login">
@@ -23,7 +23,7 @@
                 </h2>
                 <input type="text" placeholder="Nome do Usuário">
                 <input type="password" placeholder="Senha">
-                <input type="submit" value="Acessar" />
+                <button class="btn-acessar" onclick="acessarPagina()">Acessar</button>
                 <div class="group">
                     <span>Não tem conta?</span>
                     <button class="btn-cadastrar" onclick="window.location.href='cadastro.html'">Cadastre-se</button>
@@ -31,5 +31,10 @@
             </div>
         </div>
     </div>
+    <script>
+        function acessarPagina() {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

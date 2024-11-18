@@ -13,25 +13,23 @@ body, html {
     margin: 0;
     background-color: rgba(0, 0, 0, 0.662);
 }
-
-#audioControl {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background: #ff2770;
-    color: #fff;
-    border: none;
+.btn-acessar {
+    padding: 25px 35px; /* Maior tamanho */
+    color: #fff; 
+    background: #45f3ff; /* Azul */
+    border: 2px solid #45f3ff;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 1.2em;
-    z-index: 1000;
-    transition: 0.3s;
+    transition: 0.5s;
+    font-size: 1.1em; 
 }
 
-#audioControl:hover {
-    background: #ff4c87;
+.btn-acessar:hover {
+    background-color: #3498db; /
+    box-shadow: 0 0 10px #45f3ff, 0 0 10px #45f3ff;
+    color: #fff;
 }
+
 
 body {
     display: flex;
