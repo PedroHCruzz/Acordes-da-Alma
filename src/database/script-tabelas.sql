@@ -6,57 +6,53 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
+create database acordesdaalma;
+use acordesdaalma;
 
-USE aquatech;
+-- drop database acordesdaalma;
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+create table usuario (
+    idUsuario int primary key auto_increment,
+    nome varchar(45) not null,
+    email varchar(45) not null unique,
+    senha varchar(45) not null,
+    confirmar_senha varchar(45) not null
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+select * from usuario;
+
+create table musica (
+    idMusica int primary key auto_increment,
+    titulo varchar(45) not null,
+    artista varchar(45) not null
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+select * from musica;
+
+create table emocao (
+    idEmocao int primary key auto_increment,
+    descricao varchar(200) not null unique
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+select * from emocao;
+
+create table usuario_musica (
+    fkUsuario int,
+    fkMusica int,
+    data_escolha date not null,
+    primary key (fkUsuario, fkMusica),
+    foreign key (fkUsuario) references usuario(idUsuario) on delete cascade,
+    foreign key (fkMusica) references musica(idMusica) on delete cascade
 );
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+select * from usuario_musica;
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
+create table musica_emocao (
+    fkMusica int,
+    fkEmocao int,
+    primary key (fkMusica, fkEmocao),
+    foreign key (fkMusica) references musica(idMusica),
+    foreign key (fkEmocao) references emocao(idEmocao)
 );
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+select * from musica_emocao;
