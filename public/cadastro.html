@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href="./css/cadastro.css">
-    <script src="./js/cadastro.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="./css/cadastro.css">
+  <script src="./js/cadastro.js" defer></script>
 </head>
+
 <body>
-    
-    <div class="box">
-        <div class="register">
-            <div class="registerBx">
-                <h2>
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    Cadastro
-                    <i class="fa-solid fa-heart"></i>
-                </h2>
-                <form action="login.html" method="get"> 
-                    <input type="text" id="input_nome" placeholder="Nome do Usuário" required>
-                    <input type="email" id="input_email" placeholder="Email" required>
-                    <input type="password" id="input_senha" placeholder="Senha" required>
-                    <input type="password" id="input_confirmacao_senha" placeholder="Confirme a Senha" required>
-                    <input type="submit" value="Cadastrar-se"> 
-                </form>
-                <div class="group">
-                    <span>Já possui uma conta?</span>
-                    <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
-                </div>
-            </div>
+
+  <div class="box">
+    <div class="register">
+      <div class="registerBx">
+        <h2>
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Cadastro
+          <i class="fa-solid fa-heart"></i>
+        </h2>
+        <div class="formulario">
+          <input type="text" id="input_nome" placeholder="Nome do Usuário" required>
+          <input type="email" id="input_email" placeholder="Email" required>
+          <input type="password" id="input_senha" placeholder="Senha" required>
+          <input type="password" id="input_confirmacao_senha" placeholder="Confirme a Senha" required>
+          <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
+        <div class="group">
+          <span>Já possui uma conta?</span>
+          <button class="btn-login" onclick="window.location.href='login.html'">Login</button>
+        </div>
+      </div>
     </div>
+  </div>
+  <div id="mensagem_erro"></div>
 </body>
+
 </html>
 <script>
-    function cadastrar() {
+  function cadastrar() {
     // aguardar();
 
     //Recupere o valor da nova input pelo nome do id
@@ -43,14 +47,13 @@
     var emailVar = input_email.value;
     var senhaVar = input_senha.value;
     var confirmacaoSenhaVar = input_confirmacao_senha.value;
-   
+
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "")
-       {
+      confirmacaoSenhaVar == "") {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
         "(Mensagem de erro para todos os campos em branco)";
@@ -58,7 +61,8 @@
       finalizarAguardar();
       return false;
     } else {
-      setInterval(sumirMensagem, 5000);
+      // setInterval(sumirMensagem, 5000);
+      console.log('oi krl') 
     }
 
     // Verificando se o código de ativação é de alguma empresa cadastrada
@@ -75,7 +79,7 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
+        confirmacaoSenhaVar: confirmacaoSenhaVar 
       }),
     })
       .then(function (resposta) {
@@ -91,15 +95,15 @@
             window.location = "login.html";
           }, "2000");
 
-          limparFormulario();
-          finalizarAguardar();
+          // limparFormulario();
+          // finalizarAguardar();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
+        // finalizarAguardar();
       });
 
     return false;

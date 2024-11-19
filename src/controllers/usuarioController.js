@@ -41,7 +41,9 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var confirmar_senha = req.body. confirmar_senhaServer;
+    var confirmar_senha = req.body.confirmacaoSenhaVar;
+
+    console.log(req.body.confirmacaoSenhaVar)
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -58,7 +60,15 @@ function cadastrar(req, res) {
         usuarioModel.cadastrar(nome, email, senha, confirmar_senha)
             .then(
                 function (resultado) {
-                    res.json(resultado);
+                    res.json(resultado)
+                        // {
+                        // id: resultado[0].idUsuario,
+                        // email: resultado[0].email,
+                        // nome: resultado[0].nome,
+                        // senha: resultado[0].senha
+                   
+                    // }
+               ;
                 }
             ).catch(
                 function (erro) {

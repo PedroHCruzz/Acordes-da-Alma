@@ -11,6 +11,9 @@ create table usuario (
     confirmar_senha varchar(45) not null
 );
 
+ INSERT INTO usuario (nome, email, senha, confirmar_senha) VALUES
+ ('zé', 'ze@gmail.com', '1234', '1234');
+
 select * from usuario;
 
 create table musica (
@@ -20,6 +23,8 @@ create table musica (
 );
 
 select * from musica;
+
+SELECT nome, email, senha FROM usuario WHERE email = 'ze@gmail.com' AND senha = '1234';
 
 create table emocao (
     idEmocao int primary key auto_increment,
