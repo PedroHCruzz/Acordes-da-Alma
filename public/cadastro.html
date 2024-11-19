@@ -8,7 +8,7 @@
     <script src="./js/cadastro.js" defer></script>
 </head>
 <body>
-    <button id="audioControl" onclick="toggleAudio()">🔊</button> 
+    
     <div class="box">
         <div class="register">
             <div class="registerBx">
@@ -18,10 +18,10 @@
                     <i class="fa-solid fa-heart"></i>
                 </h2>
                 <form action="login.html" method="get"> 
-                    <input type="text" placeholder="Nome do Usuário" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Senha" required>
-                    <input type="password" placeholder="Confirme a Senha" required>
+                    <input type="text" id="input_nome" placeholder="Nome do Usuário" required>
+                    <input type="email" id="input_email" placeholder="Email" required>
+                    <input type="password" id="input_senha" placeholder="Senha" required>
+                    <input type="password" id="input_confirmacao_senha" placeholder="Confirme a Senha" required>
                     <input type="submit" value="Cadastrar-se"> 
                 </form>
                 <div class="group">
@@ -33,3 +33,75 @@
     </div>
 </body>
 </html>
+<script>
+    function cadastrar() {
+    // aguardar();
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var nomeVar = input_nome.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+    var confirmacaoSenhaVar = input_confirmacao_senha.value;
+   
+    // Verificando se há algum campo em branco
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      confirmacaoSenhaVar == "")
+       {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Mensagem de erro para todos os campos em branco)";
+
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
+    }
+
+    // Verificando se o código de ativação é de alguma empresa cadastrada
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+        idEmpresaVincularServer: idEmpresaVincular
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+</script>
