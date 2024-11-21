@@ -8,6 +8,46 @@ body {
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.dash {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card-musica {
+  width: 200px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.conteudo-card {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.conteudo-card h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.conteudo-card p {
+  margin: 0;
+  font-size: 14px;
+}
+
 .label-captura {
   display: flex;
   justify-content: center;

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
@@ -8,32 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaTech | Tempo Real</title>
 
-
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
 
     <script src="../js/sessao.js"></script>
     <script src="../js/alerta.js"></script>
+    <script src="../js/database.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
+<body>
 
     <div class="janela">
-
         <div class="header-left dash-header">
-
-            <h1>AquaTech</h1>
+            <h1>Acordes da Alma</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
             <div class="btn-nav">
-                <h3>Aquários</h3>
+                <h3>Músicas</h3>
             </div>
 
             <div class="btn-nav-white">
@@ -44,58 +41,75 @@
 
             <div class="btn-nav-white">
                 <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
+                    <h3>Comentários</h3>
                 </a>
             </div>
 
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
-
         </div>
 
         <div class="dash">
-            <div id="alerta">
+            <div class="cards" id="cardMusicas">
+               
             </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cards" id="cardAquarios">
-
-            </div>
-
         </div>
-
     </div>
 
 </body>
 
 <script>
+    // Lista de músicas
+    const musicas = [
+        { id: 1, titulo: "Música 1", subtitulo: "Artista 1", imagem: "./../assets/musica1.jpg" },
+        { id: 2, titulo: "Música 2", subtitulo: "Artista 2", imagem: "./../assets/musica2.jpg" },
+        { id: 3, titulo: "Música 3", subtitulo: "Artista 3", imagem: "./../assets/musica3.jpg" },
+        { id: 4, titulo: "Música 4", subtitulo: "Artista 4", imagem: "./../assets/musica4.jpg" },
+        { id: 5, titulo: "Música 5", subtitulo: "Artista 5", imagem: "./../assets/musica5.jpg" },
+        { id: 6, titulo: "Música 6", subtitulo: "Artista 6", imagem: "./../assets/musica6.jpg" },
+        { id: 7, titulo: "Música 7", subtitulo: "Artista 7", imagem: "./../assets/musica7.jpg" },
+        { id: 8, titulo: "Música 8", subtitulo: "Artista 8", imagem: "./../assets/musica8.jpg" },
+    ];
+
+    // Exibe os cards na tela
+    function exibirMusicas() {
+        const container = document.getElementById("cardMusicas");
+        musicas.forEach(musica => {
+            container.innerHTML += `
+                <div class="card-musica" onclick="registrarClique(${musica.id})" style="background-image: url('${musica.imagem}');">
+                    <div class="conteudo-card">
+                        <h2>${musica.titulo}</h2>
+                        <p>${musica.subtitulo}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Simulação de envio para banco de dados e atualização do gráfico
+    function registrarClique(musicaId) {
+        fetch('/registrar-ponto', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ musicaId }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Ponto registrado para a música ${musicaId}`);
+                } else {
+                    console.error('Erro ao registrar ponto');
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+    }
+
+    // Chama a função ao carregar a página
+    window.onload = () => {
+        exibirMusicas();
+    };
 
     function exibirAquarios() {
         JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
@@ -115,6 +129,7 @@
         });
     }
 
-</script>
+    
 
+</script>
 </html>
