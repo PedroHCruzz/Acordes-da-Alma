@@ -1,7 +1,7 @@
-# Acordes da Alma 
+# Acordes da Alma 🎼
 Projeto individual para conclusão do semestre na SPTech:
 
-# 🎨 Visão Geral do meu Projeto
+# 🎶 Visão Geral do meu Projeto
 
 Site Institucional: Apresenta uma introdução sobre como a música influencia nossas emoções, evocando lembranças e sentimentos ao ouvi-las. Também oferece pequenos resumos sobre algumas emoções relacionadas a acordes, batidas e ritmos musicais, demonstrando como essas características podem aflorar nossos sentimentos.
 
