@@ -1,135 +1,189 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
-
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-
-    <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
-    <script src="../js/database.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
-        rel="stylesheet">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dash.css" />
+    <title>Acordes da Alma</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
 
-<body>
+  <body onload="initGrafico()">
+    <video autoplay loop muted playsinline class="background-video">
+      <source src="fundoDash.mp4" type="video/mp4" />
+    </video>
 
-    <div class="janela">
-        <div class="header-left dash-header">
-            <h1>Acordes da Alma</h1>
-
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
-
-            <div class="btn-nav">
-                <h3>Músicas</h3>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Comentários</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
+    <div class="painel">
+      <header>
+        <img src="img/logo.jpg" alt="logo_game_awards" width="200px" />
+        <div>
+          <h1 class="titulos-italicos"></h1>
+          <h1></h1>
         </div>
-
-        <div class="dash">
-            <div class="cards" id="cardMusicas">
-               
-            </div>
+      </header>
+      <div class="titulos">
+        <p class="titulos-italicos"></p>
+        <h1>Músicas</h1>
+        <h3>Vote na sua música favorita!</h3>
+      </div>
+      <div class="jogos-concorrentes">
+        <div class="jogo" onclick="votar('Star shopping')">
+          <img
+            src="img/star.jpg"
+            alt="Star shopping"
+            width="200px"
+            height="300px"
+          />
+          <p>Star shopping</p>
         </div>
+        <div class="jogo" onclick="votar('Papercut')">
+          <img
+            src="img/hybrid.jpg"
+            alt="Papercut"
+            width="200px"
+            height="300px"
+          />
+          <p>Papercut</p>
+        </div>
+        <div class="jogo" onclick="votar('I wanna be yours')">
+          <img
+            src="img/wanna.jpg"
+            alt="I wanna be yours"
+            width="200px"
+            height="300px"
+          />
+          <p>I wanna be yours</p>
+        </div>
+        <div class="jogo" onclick="votar('Not like us')">
+          <img
+            src="img/not.jpg"
+            alt="Not like us"
+            width="200px"
+            height="300px"
+          />
+          <p>Not like us</p>
+        </div>
+        <div class="jogo" onclick="votar('Sleepwalker')">
+          <img
+            src="img/sllep.jpg"
+            alt="Sleepwalker"
+            width="200px"
+            height="300px"
+          />
+          <p>Sleepwalker</p>
+        </div>
+        <div class="jogo" onclick="votar('idontwannabeyouanymore')">
+          <img
+            src="img/dont.jpg"
+            alt="idontwannabeyouanymore"
+            width="200px"
+            height="300px"
+          />
+          <p>idontwannabeyouanymore</p>
+        </div>
+      </div>
+      <div class="grafico">
+        <canvas id="myCanvas"></canvas>
+      </div>
     </div>
 
-</body>
+    <script>
+      const votos = {
+        "Star shopping": 0,
+        "Papercut": 0,
+        "I wanna be yours": 0,
+        "Not like us": 0,
+        "Sleepwalker": 0,
+        "idontwannabeyouanymore": 0,
+      };
 
-<script>
-    // Lista de músicas
-    const musicas = [
-        { id: 1, titulo: "Música 1", subtitulo: "Artista 1", imagem: "./../assets/musica1.jpg" },
-        { id: 2, titulo: "Música 2", subtitulo: "Artista 2", imagem: "./../assets/musica2.jpg" },
-        { id: 3, titulo: "Música 3", subtitulo: "Artista 3", imagem: "./../assets/musica3.jpg" },
-        { id: 4, titulo: "Música 4", subtitulo: "Artista 4", imagem: "./../assets/musica4.jpg" },
-        { id: 5, titulo: "Música 5", subtitulo: "Artista 5", imagem: "./../assets/musica5.jpg" },
-        { id: 6, titulo: "Música 6", subtitulo: "Artista 6", imagem: "./../assets/musica6.jpg" },
-        { id: 7, titulo: "Música 7", subtitulo: "Artista 7", imagem: "./../assets/musica7.jpg" },
-        { id: 8, titulo: "Música 8", subtitulo: "Artista 8", imagem: "./../assets/musica8.jpg" },
-    ];
+      let myChart;
 
-    // Exibe os cards na tela
-    function exibirMusicas() {
-        const container = document.getElementById("cardMusicas");
-        musicas.forEach(musica => {
-            container.innerHTML += `
-                <div class="card-musica" onclick="registrarClique(${musica.id})" style="background-image: url('${musica.imagem}');">
-                    <div class="conteudo-card">
-                        <h2>${musica.titulo}</h2>
-                        <p>${musica.subtitulo}</p>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    // Simulação de envio para banco de dados e atualização do gráfico
-    function registrarClique(musicaId) {
-        fetch('/registrar-ponto', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+      function initGrafico() {
+        const ctx = document.getElementById("myCanvas").getContext("2d");
+        myChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: Object.keys(votos),
+            datasets: [
+              {
+                label: "Votos",
+                data: Object.values(votos),
+                backgroundColor: [
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false, // Remove a legenda de conjunto (não necessário para barras)
+              },
+              title: {
+                display: true,
+                text: "Votação das Músicas",
+                color: "#FFFFFF",
+                font: {
+                  size: 20,
+                },
+              },
             },
-            body: JSON.stringify({ musicaId }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log(`Ponto registrado para a música ${musicaId}`);
-                } else {
-                    console.error('Erro ao registrar ponto');
-                }
-            })
-            .catch(error => console.error('Erro:', error));
-    }
-
-    // Chama a função ao carregar a página
-    window.onload = () => {
-        exibirMusicas();
-    };
-
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Músicas",
+                  color: "#FFFFFF",
+                },
+                ticks: {
+                  color: "white",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Quantidade de votos para a música",
+                  color: "#FFFFFF",
+                },
+                beginAtZero: true,
+                ticks: {
+                  color: "white",
+                },
+              },
+            },
+          },
         });
-    }
+      }
 
-    
-
-</script>
+      function votar(musica) {
+        if (votos.hasOwnProperty(musica)) {
+          votos[musica]++;
+          myChart.data.datasets[0].data = Object.values(votos);
+          myChart.update();
+        }
+      }
+    </script>
+  </body>
 </html>

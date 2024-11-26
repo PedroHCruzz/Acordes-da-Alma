@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+ }
+ body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .painel {
+    position: relative;
+    z-index: 1;
+  }
+  /* Adicionando estilos básicos para o menu lateral */
+  .menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    transition: width 0.3s;
+    overflow: hidden;
+  }
+  .menu-lateral.retraido {
+    width: 60px;
+  }
+  .menu-lateral ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  .menu-lateral li {
+    padding: 20px;
+    cursor: pointer;
+  }
+  .menu-lateral li:hover {
+    background-color: #444;
+  }
+  .container {
+    margin-left: 260px;
+    transition: margin-left 0.3s;
+  }
+  .container.menu-retraido {
+    margin-left: 70px;
+  }  
+ .painel {
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url('../assets/01.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 15px;
+    font-family: "Poppins", sans-serif;
+ }
+ 
+ header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+ }
+ 
+ .titulos-italicos {
+    font-style: italic;
+ }
+ 
+ .titulos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+ }
+ 
+ .titulos h1 {
+    font-size: 40px;
+ }
+ 
+ .jogos-concorrentes {
+    display: flex;
+    justify-content: space-around;
+ }
+ 
+ .jogo {
+    cursor: pointer;
+    width: 200px;
+    font-weight: 500;
+    word-wrap: break-word; 
+ }
+ 
+ .jogo:hover {
+    transform: scale(1.1);
+    transition: 0.4s;
+ }
+ .grafico {
+    height: 450px;
+    width: 90%;
+    padding-left: 10%;
+    background-color: rgba(0, 0, 0, 0.662); 
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+  
+   
+    border: 6px solid; 
+    border-image-slice: 1; 
+    animation: bordaCores 3s infinite; 
+  }
+  
+  /* Animação da borda */
+  @keyframes bordaCores {
+    0% {
+      border-image-source: linear-gradient(90deg, #45f3ff, white);
+    }
+    25% {
+      border-image-source: linear-gradient(90deg, crimson, crimson);
+    }
+    50% {
+      border-image-source: linear-gradient(90deg, white, #45f3ff);
+    }
+    75% {
+      border-image-source: linear-gradient(90deg, #45f3ff, white);
+    }
+    100% {
+      border-image-source: linear-gradient(90deg, white, crimson);
+    }
+  }
+  
