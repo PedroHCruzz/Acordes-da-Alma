@@ -68,6 +68,22 @@ body {
     margin-bottom: 100px;
 } 
 
+.botao {
+    padding: 8px 60px; 
+    color: #fff; 
+    background: #45f3ff;
+    border: 2px solid #45f3ff;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+    font-size: 1.1em; 
+}
+
+.botao:hover {
+    background-color: #3498db;
+    box-shadow: 0 0 10px #45f3ff, 0 0 10px #45f3ff;
+    color: #fff;
+}
 
 
 @property --a {
