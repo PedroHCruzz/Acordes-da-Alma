@@ -1,7 +1,10 @@
 let musicas = [
-    {titulo:'Jutes', artista:'Jutes', src:'jutes.mp3', img:'jutes.jpg'},
-    {titulo:'Samba raiz', artista:'Bossa Nova Brasil', src:'musicas/Ella Vater - The Mini Vandals.mp3', img:'imagens/samba.jpg'},
-    {titulo:'Música piano', artista:'John Green', src:'musicas/A Brand New Start - TrackTribe (1).mp3', img:'imagens/piano.jpg'}
+    {titulo:'Blinding Lights', artista:'The Weeknd', src:'Lights.mp3', img:'theweenknd.jpg'},
+    {titulo:'Papercut', artista:'Linkin Park', src:'Papercut.mp3', img:'hybrid.jpg'},
+    {titulo:'Permission to Dance', artista:'BTS', src:'BTS.mp3', img:'bts.jpg'},
+    {titulo:'Sleepwalker', artista:'Bring Me The Horizon', src:'Bmth.mp3', img:'bmth.jpg'},
+    {titulo:'idontwannabeyouanymore', artista:'Billie Eilish', src:'dont.mp3', img:'dont.jpg'},
+    {titulo:'i wanna be yours', artista:'Arctic Monkeys', src:'wanna.mp3', img:'wanna.jpg'}
 ];
 
 let musica = document.querySelector('audio');
@@ -24,14 +27,14 @@ musica.addEventListener('timeupdate', atualizarBarra);
 document.querySelector('.anterior').addEventListener('click', () => {
     indexMusica--;
     if (indexMusica < 0) {
-        indexMusica = 2;
+        indexMusica = 5;
     }
     renderizarMusica(indexMusica);
 });
 
 document.querySelector('.proxima').addEventListener('click', () => {
     indexMusica++;
-    if (indexMusica > 2){
+    if (indexMusica > 5){
         indexMusica = 0;
     }
     renderizarMusica(indexMusica);
