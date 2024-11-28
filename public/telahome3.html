@@ -1,48 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t3</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/telahome3.css">
+    <title>Acordes da alma</title>
 </head>
 <body>
-    <link rel="stylesheet" href="telahome3.css">
-</body>
-</html>
-<div class="container">
-    
-    <!-- Estrutura html -->
-    <div class="slides">
-        <input type="radio" name="r" id="radio1" checked>
-        <input type="radio" name="r" id="radio2">
-        <input type="radio" name="r" id="radio3">
-        <input type="radio" name="r" id="radio4">
-        <input type="radio" name="r" id="radio5">
-
-
-        <div class="slide s1">
-            <img src="https://i.pinimg.com/564x/6b/62/f7/6b62f79856c139b7bcd2d1d817a40645.jpg" alt="">
+    <img src="jutes.jpg">
+    <div class="descricao">
+        <h2>Sleepyhead</h2>
+        <i>Jutes</i>
+    </div>
+    <div class="duracao">
+        <div class="barra">
+            <progress value="0" max="1"></progress>
+            <div class="ponto"></div>
         </div>
-        <div class="slide">
-            <img src="https://i.pinimg.com/736x/ee/15/3d/ee153d79492f01feb8decb2e40d0cf0b.jpg" alt="">
-        </div>
-        <div class="slide">
-            <img src="https://i.pinimg.com/564x/d1/da/63/d1da635864ae706e228343227a61a28e.jpg" alt="">
-        </div>
-        <div class="slide">
-            <img src="https://i.pinimg.com/564x/d0/18/c5/d018c50f4985a1377b92032c071921d3.jpg" alt="">
-        </div>
-        <div class="slide">
-            <img src="https://i.pinimg.com/564x/27/fc/d2/27fcd29c1874b1baa1c6e1d246f48685.jpg" alt="">
-        </div>
-
-        <div class="navigation">
-            <label for="radio1" class="bar bar1"></label>
-            <label for="radio2" class="bar bar2"></label>
-            <label for="radio3" class="bar bar3"></label>
-            <label for="radio4" class="bar bar4"></label>
-            <label for="radio5" class="bar bar5"></label>
+        <div class="tempo">
+            <p class="inicio">0:00</p>
+            <p class="fim">3:12</p>
         </div>
     </div>
-
-</div>
+    <div class="player">
+        <i class="fas fa-step-backward setas anterior"></i>
+        <i class="fas fa-play-circle botao-play"></i>
+        <i class="fas fa-pause-circle botao-pause"></i>
+        <i class="fas fa-step-forward setas proxima"></i>
+    </div>
+    <audio src="jutes.mp3"></audio>
+    <script src="js/telahome3.js"></script>
+</body>
+</html>
