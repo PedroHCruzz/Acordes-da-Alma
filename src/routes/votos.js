@@ -3,8 +3,8 @@ var router = express.Router();
 
 var votoController = require("../controllers/votoController");
 
-router.post("/votar/:nomeJogo", function (req, res) {
-  votoController.votarPorNome(req, res); 
+router.put("/votar/:idVotos", function (req, res) {
+  votoController.votarPorId(req, res); 
 });
 
 router.get("/ultimos", function (req, res) {

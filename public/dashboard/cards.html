@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
-  <body onload="initGrafico()">
+  <body>
     <video autoplay loop muted playsinline class="background-video">
       <source src="fundoDash.mp4" type="video/mp4" />
     </video>
@@ -33,7 +33,7 @@
         <h3>Vote na sua música favorita!</h3>
       </div>
       <div class="jogos-concorrentes">
-        <div class="jogo" onclick="votar('Star shopping')">
+        <div class="jogo" onclick="votar(1)">
           <img
             src="img/star.jpg"
             alt="Star shopping"
@@ -42,7 +42,7 @@
           />
           <p>Star shopping</p>
         </div>
-        <div class="jogo" onclick="votar('Papercut')">
+        <div class="jogo" onclick="votar(2)">
           <img
             src="img/hybrid.jpg"
             alt="Papercut"
@@ -51,7 +51,7 @@
           />
           <p>Papercut</p>
         </div>
-        <div class="jogo" onclick="votar('I wanna be yours')">
+        <div class="jogo" onclick="votar(3)">
           <img
             src="img/wanna.jpg"
             alt="I wanna be yours"
@@ -60,7 +60,7 @@
           />
           <p>I wanna be yours</p>
         </div>
-        <div class="jogo" onclick="votar('Not like us')">
+        <div class="jogo" onclick="votar(4)">
           <img
             src="img/not.jpg"
             alt="Not like us"
@@ -69,7 +69,7 @@
           />
           <p>Not like us</p>
         </div>
-        <div class="jogo" onclick="votar('Sleepwalker')">
+        <div class="jogo" onclick="votar(5)">
           <img
             src="img/sllep.jpg"
             alt="Sleepwalker"
@@ -78,7 +78,7 @@
           />
           <p>Sleepwalker</p>
         </div>
-        <div class="jogo" onclick="votar('idontwannabeyouanymore')">
+        <div class="jogo" onclick="votar(6)">
           <img
             src="img/dont.jpg"
             alt="idontwannabeyouanymore"
@@ -94,27 +94,18 @@
     </div>
 
     <script>
-      const votos = {
-        "Star shopping": 0,
-        "Papercut": 0,
-        "I wanna be yours": 0,
-        "Not like us": 0,
-        "Sleepwalker": 0,
-        "idontwannabeyouanymore": 0,
-      };
-
       let myChart;
 
-      function initGrafico() {
+      function initGrafico(labels, data) {
         const ctx = document.getElementById("myCanvas").getContext("2d");
         myChart = new Chart(ctx, {
           type: "bar",
           data: {
-            labels: Object.keys(votos),
+            labels: labels,
             datasets: [
               {
                 label: "Votos",
-                data: Object.values(votos),
+                data: data,
                 backgroundColor: [
                   "rgba(75, 192, 192, 0.2)",
                   "rgba(255, 99, 132, 0.2)",
@@ -178,12 +169,73 @@
       }
 
       function votar(musica) {
-        if (votos.hasOwnProperty(musica)) {
-          votos[musica]++;
-          myChart.data.datasets[0].data = Object.values(votos);
-          myChart.update();
+        console.log('ta na função')
+
+        
+        console.log(musica)
+        fetch(`/votos/votar/${musica}`, {
+          method: "PUT"
+        }).then(function (resposta) {
+          console.log("ESTOU NO THEN DO entrar()!")
+          
+          
+            if (resposta.ok) {
+                console.log(resposta);
+
+            } else {
+                alert("Houve um erro ao atualizar voto!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    // finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
         }
-      }
-    </script>
+        buscarQuantidade();
+        function buscarQuantidade() {
+          fetch(`/votos/ultimos`, {
+          method: "GET"
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                  console.log(json);
+
+                  var lista_dados = [];
+                  var lista_label = [];
+                  var tamanho_lista = json.length
+                  
+                  for (var i = 0; i < tamanho_lista; i++) {
+                    lista_dados.push(json[i].quantidade)
+                    lista_label.push(json[i].opcao)
+                  }
+
+                  initGrafico(lista_label, lista_dados)
+                });
+            } else {
+                alert("Houve um erro ao atualizar voto!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    // finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+        votos[musica]++;
+        myChart.data.datasets[0].data = Object.values(votos);
+        myChart.update();
+
+        return false;
+        }
+    </script> 
   </body>
 </html>

@@ -1,10 +1,10 @@
 var votoModel = require("../models/votoModel");
 
-function votarPorNome(req, res) {
-  var nomeJogo = req.params.nomeJogo;
-  console.log("Jogo recebido:", nomeJogo);
+function votarPorId(req, res) {
+  var idVotos = req.params.idVotos;
+  console.log("voto recebido:", idVotos);
 
-  votoModel.atualizarVoto(nomeJogo)                            
+  votoModel.atualizarVoto(idVotos)                            
     .then(function (resultado) {                               
       res.status(200).send("Voto contabilizado com sucesso!"); 
     })
@@ -35,6 +35,6 @@ function obterVotosAtualizados(req, res) {
 }
 
 module.exports = {
-  votarPorNome,
+  votarPorId,
   obterVotosAtualizados,
 };

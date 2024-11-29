@@ -1,10 +1,10 @@
 var database = require("../database/config");
 
-function atualizarVoto(nomeJogo) {
+function atualizarVoto(idVotos) {
   var instrucaoSql = `
         UPDATE votos
         SET quantidade = quantidade + 1
-        WHERE jogo = '${nomeJogo}'
+        WHERE idVotos = ${idVotos}
     `;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -12,7 +12,7 @@ function atualizarVoto(nomeJogo) {
 }
 
 function buscarVotos() {
-  var instrucaoSql = `SELECT quantidade FROM votos`;
+  var instrucaoSql = `SELECT quantidade, opcao FROM votos`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
