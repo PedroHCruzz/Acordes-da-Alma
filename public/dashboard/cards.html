@@ -169,73 +169,75 @@
       }
 
       function votar(musica) {
-        console.log('ta na função')
+  fetch(`/votos/votar/${musica}`, {
+    method: "PUT"
+  }).then(function (resposta) {
+    if (resposta.ok) {
+      console.log("Voto registrado com sucesso!");
+      buscarQuantidade(); // Atualiza o gráfico após o voto
+    } else {
+      alert("Houve um erro ao registrar o voto!");
+      resposta.text().then(texto => {
+        console.error(texto);
+      });
+    }
+  }).catch(function (erro) {
+    console.log(erro);
+  });
 
-        
-        console.log(musica)
-        fetch(`/votos/votar/${musica}`, {
-          method: "PUT"
-        }).then(function (resposta) {
-          console.log("ESTOU NO THEN DO entrar()!")
-          
-          
-            if (resposta.ok) {
-                console.log(resposta);
 
-            } else {
-                alert("Houve um erro ao atualizar voto!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    // finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
 
         return false;
         }
         buscarQuantidade();
         function buscarQuantidade() {
-          fetch(`/votos/ultimos`, {
-          method: "GET"
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                console.log(resposta);
-                resposta.json().then(json => {
-                  console.log(json);
+  fetch(`/votos/ultimos`, {
+    method: "GET"
+  }).then(function (resposta) {
+    if (resposta.ok) {
+      resposta.json().then(json => {
+        console.log(json);
 
-                  var lista_dados = [];
-                  var lista_label = [];
-                  var tamanho_lista = json.length
-                  
-                  for (var i = 0; i < tamanho_lista; i++) {
-                    lista_dados.push(json[i].quantidade)
-                    lista_label.push(json[i].opcao)
-                  }
+        var lista_dados = [];
+        var lista_label = [];
+        var tamanho_lista = json.length;
 
-                  initGrafico(lista_label, lista_dados)
-                });
-            } else {
-                alert("Houve um erro ao atualizar voto!");
+        for (var i = 0; i < tamanho_lista; i++) {
+          lista_dados.push(json[i].quantidade);
+          lista_label.push(json[i].opcao);
+        }
 
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    // finalizarAguardar(texto);
-                });
-            }
+        if (myChart) {
+          // Atualiza os dados do gráfico existente
+          myChart.data.labels = lista_label;
+          myChart.data.datasets[0].data = lista_dados;
+          myChart.update();
+        } else {
+          // Inicializa o gráfico se ainda não existir
+          initGrafico(lista_label, lista_dados);
+        }
+      });
+    } else {
+      alert("Houve um erro ao atualizar os dados!");
+      resposta.text().then(texto => {
+        console.error(texto);
+      });
+    }
+  }).catch(function (erro) {
+    console.log(erro);
+  });
 
-        }).catch(function (erro) {
-            console.log(erro);
-        })
+
         votos[musica]++;
         myChart.data.datasets[0].data = Object.values(votos);
         myChart.update();
 
         return false;
         }
+
+        // Atualiza o gráfico a cada 5 segundos (5000 ms)
+setInterval(buscarQuantidade, 5000);
+
     </script> 
   </body>
 </html>
