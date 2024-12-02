@@ -8,11 +8,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/telahome3.css">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="musica.css">
     <title>Acordes da alma</title>
 </head>
 <body>
-    <img src="theweenknd.jpg">
+</head>
+<body>
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="img/fundoDash.mp4" type="video/mp4" />
+  </video>
+  <script>
+    const video = document.querySelector('.background-video');
+    video.playbackRate = 0.15; 
+  </script>
+  <div class="painel">
+    <header>
+      <div class="logo-box">
+        <img src="img/logo.jpg" alt="Logo Game Awards" width="150px" />
+      </div>
+      <div class="header-buttons">
+        <a href="Musica.html">Músicas</a>
+        <a href="cards.html">Votos</a>
+        <a href="mural.html">Comentários</a>
+      </div>
+    </header>
     <div class="descricao">
         <h2>Blinding Lights</h2>
         <i>The Weeknd</i>
@@ -33,7 +53,7 @@
         <i class="fas fa-pause-circle botao-pause"></i>
         <i class="fas fa-step-forward setas proxima"></i>
     </div>
-    <audio src="Lights.mp3"></audio>
-    <script src="js/telahome3.js"></script>
+    <audio src="img/Lights.mp3"></audio>
+    <script src="musica.js"></script>
 </body>
 </html>

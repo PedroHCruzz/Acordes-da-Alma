@@ -13,22 +13,30 @@
     <title>Acordes da Alma</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-
   <body>
     <video autoplay loop muted playsinline class="background-video">
       <source src="img/fundoDash.mp4" type="video/mp4" />
     </video>
+    <script>
+      const video = document.querySelector('.background-video');
+      video.playbackRate = 0.15; 
+    </script>
+    
 
     <div class="painel">
       <header>
-        <img src="img/logo.png" alt="logo_game_awards" width="200px" />
-        <div>
-          <h1 class="titulos-italicos"></h1>
-          <h1></h1>
+        <div class="logo-box">
+          <img src="img/logo.jpg" alt="Logo Game Awards" class="logo" />
+        </div>
+        
+        <div class="header-buttons">
+          <a href="Musica.html">Músicas</a>
+          <a href="cards.html">Votos</a>
+          <a href="mural.html">Comentários</a>
         </div>
       </header>
+
       <div class="titulos">
-        <p class="titulos-italicos"></p>
         <h1>Músicas</h1>
         <h3>Vote na sua música favorita!</h3>
       </div>
@@ -92,6 +100,7 @@
         <canvas id="myCanvas"></canvas>
       </div>
     </div>
+
 
     <script>
       let myChart;
@@ -168,6 +177,7 @@
         });
       }
 
+  
       function votar(musica) {
   fetch(`/votos/votar/${musica}`, {
     method: "PUT"

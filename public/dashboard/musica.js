@@ -1,10 +1,10 @@
 let musicas = [
-    {titulo:'Blinding Lights', artista:'The Weeknd', src:'Lights.mp3', img:'theweenknd.jpg'},
-    {titulo:'Papercut', artista:'Linkin Park', src:'Papercut.mp3', img:'hybrid.jpg'},
-    {titulo:'Permission to Dance', artista:'BTS', src:'BTS.mp3', img:'bts.jpg'},
-    {titulo:'Sleepwalker', artista:'Bring Me The Horizon', src:'Bmth.mp3', img:'bmth.jpg'},
-    {titulo:'idontwannabeyouanymore', artista:'Billie Eilish', src:'dont.mp3', img:'dont.jpg'},
-    {titulo:'i wanna be yours', artista:'Arctic Monkeys', src:'wanna.mp3', img:'wanna.jpg'}
+    {titulo:'Blinding Lights', artista:'The Weeknd', src:'img/Lights.mp3', img:'img/theweenknd.jpg'},
+    {titulo:'Papercut', artista:'Linkin Park', src:'img/Papercut.mp3', img:'img/hybrid.jpg'},
+    {titulo:'Permission to Dance', artista:'BTS', src:'img/BTS.mp3', img:'img/bts.jpg'},
+    {titulo:'Sleepwalker', artista:'Bring Me The Horizon', src:'img/Bmth.mp3', img:'img/bmth.jpg'},
+    {titulo:'idontwannabeyouanymore', artista:'Billie Eilish', src:'img/dont.mp3', img:'img/dont.jpg'},
+    {titulo:'i wanna be yours', artista:'Arctic Monkeys', src:'img/wanna.mp3', img:'img/wanna.jpg'}
 ];
 
 let musica = document.querySelector('audio');
