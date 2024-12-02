@@ -77,6 +77,8 @@ body {
     cursor: pointer;
     transition: 0.5s;
     font-size: 1.1em; 
+    margin-left: 25px;
+    margin-top: 5px;
 }
 
 .botao:hover {
@@ -196,6 +198,7 @@ input {
     background: #0000001a;
     border: 2px solid #fff;
     border-radius: 30px;
+    margin-top: 8px;
 }
 
 input::placeholder {
