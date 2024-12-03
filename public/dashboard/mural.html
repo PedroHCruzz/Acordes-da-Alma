@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="mural.css" />
     <title>Comentários</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/sessao.js"></script>
     <style>
       .comentario-usuario {
         background-color: black;
@@ -55,7 +56,7 @@
           <a href="Musica.html">Músicas</a>
           <a href="cards.html">Votos</a>
           <a href="mural.html">Comentários</a>
-          <a href="public/login.html">Sair</a>
+          <a href="../login.html" onclick="limparSessao()">Sair</a>
           
           <h1>Acordes da Alma</h1>
           <div class="hello">
@@ -111,7 +112,7 @@ function publicarComentario() {
   const novoComentario = {
     texto: comentario,
     emocao: emocao,
-    autor: sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo",
+    autor: sessionStorage.getItem("NOME_USUARIO") || "NOME_USUARIO",
     data: new Date().toLocaleString(),
   };
 
