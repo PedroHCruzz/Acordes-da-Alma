@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="mural.css" />
     <title>Comentários</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* Adiciona um estilo para o comentário do usuário */
+      .comentario-usuario {
+        background-color: black;
+        color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body>
     <video autoplay loop muted playsinline class="background-video">
@@ -23,7 +33,6 @@
       video.playbackRate = 0.15; 
     </script>
     
-
     <div class="painel">
       <header>
         <div class="logo-box">
@@ -34,21 +43,16 @@
           <a href="Musica.html">Músicas</a>
           <a href="cards.html">Votos</a>
           <a href="mural.html">Comentários</a>
-          <a href="/public/index.html">Sair</a>
+          <a href="public/login.html">Sair</a>
           <br>
           <h1>Acordes da Alma</h1>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+          <div class="hello">
+            <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+          </div>
         </div>
       </header>
-</head>
-<body onload="validarSessao(), atualizarFeed()" style="background-color: #161618;">
-
-
-
-             <div class="content">
+      <div class="content">
         <h1>Publicar um comentário</h1>
         <div class="comentario-container">
           <form id="form_comentario" onsubmit="return publicarComentario()">
@@ -59,11 +63,11 @@
             ></textarea>
             <select id="select_emocao">
               <option value="">Selecione uma emoção</option>
-              <option value="Feliz">Feliz</option>
-              <option value="Triste">Triste</option>
-              <option value="Bravo">Bravo</option>
-              <option value="Animado">Animado</option>
-              <option value="Surpreso">Surpreso</option>
+              <option value="Feliz">Alegria</option>
+              <option value="Triste">Tristeza</option>
+              <option value="Bravo">Êxtase</option>
+              <option value="Animado">Amor</option>
+              <option value="Surpreso">Pensativo</option>
             </select>
             <button type="submit" class="btn-enviar">Enviar</button>
           </form>
@@ -71,275 +75,71 @@
         <h2>Comentários</h2>
         <div id="comentarios_container" class="comentarios-container"></div>
       </div>
+  
+    </div>
 
-<script>
-<!-- <script>
-   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+ 
+    <script>
+      // Função para carregar o nome do usuário na página
+      document.getElementById("b_usuario").textContent = sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo";
 
-function limparFormulario() {
-    document.getElementById("form_postagem").reset();
-}
+      // Função para publicar comentário
+      function publicarComentario() {
+        const comentario = document.getElementById("textarea_comentario").value.trim();
+        const emocao = document.getElementById("select_emocao").value;
 
-function publicar() {
-    var idUsuario = sessionStorage.ID_USUARIO;
-
-    var corpo = {
-        titulo: form_postagem.titulo.value,
-        descricao: form_postagem.descricao.value
-    }
-
-    fetch(`/avisos/publicar/${idUsuario}`, {
-        method: "post",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(corpo)
-    }).then(function (resposta) {
-
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-            window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
-            window.location = "/dashboard/mural.html";
-            limparFormulario();
-            finalizarAguardar();
-        } else if (resposta.status == 404) {
-            window.alert("Deu 404!");
-        } else {
-            throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+        if (comentario.split(" ").length < 5) {
+          alert("Seu comentário deve ter pelo menos 5 palavras!");
+          return false;
         }
-    }).catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-    });
 
-    return false;
-
-}
-
-var divComentarios = document.createElement("div");
-var formComentario = document.createElement("form");
-var textareaComentario = document.createElement("textarea");
-var selectEmocao = document.createElement("select");
-var btnEnviarComentario = document.createElement("button");
-var divListaComentarios = document.createElement("div");
-
-// Configurações para o formulário de comentários
-textareaComentario.placeholder = "Escreva seu comentário (mínimo 5 palavras)...";
-textareaComentario.rows = 3;
-textareaComentario.className = "textarea-comentario";
-selectEmocao.className = "select-emocao";
-btnEnviarComentario.innerHTML = "Enviar";
-btnEnviarComentario.type = "button";
-btnEnviarComentario.setAttribute("onclick", `comentar(${publicacao.idAviso})`);
-formComentario.className = "form-comentario";
-
-// Opções para o select de emoções
-["Selecione uma emoção", "Feliz", "Triste", "Bravo", "Animado", "Surpreso"].forEach((emocao, index) => {
-var option = document.createElement("option");
-option.value = index === 0 ? "" : emocao;
-option.innerHTML = emocao;
-selectEmocao.appendChild(option);
-});
-
-// Configuração para a lista de comentários
-divListaComentarios.id = `comentarios_${publicacao.idAviso}`;
-divListaComentarios.className = "lista-comentarios";
-
-// Estrutura do formulário
-formComentario.appendChild(textareaComentario);
-formComentario.appendChild(selectEmocao);
-formComentario.appendChild(btnEnviarComentario);
-
-// Adiciona o formulário e a lista de comentários à publicação
-divComentarios.className = "div-comentarios";
-divComentarios.appendChild(formComentario);
-divComentarios.appendChild(divListaComentarios);
-divPublicacao.appendChild(divComentarios);
-
-
-function editar(idAviso) {
-    sessionStorage.ID_POSTAGEM_EDITANDO = idAviso;
-    console.log("cliquei em editar - " + idAviso);
-    window.alert("Você será redirecionado à página de edição do aviso de id número: " + idAviso);
-    window.location = "/dashboard/edicao-aviso.html"
-
-}
-
-function comentar(idAviso) {
-var textarea = document.querySelector(`#comentarios_${idAviso} ~ .form-comentario .textarea-comentario`);
-var selectEmocao = document.querySelector(`#comentarios_${idAviso} ~ .form-comentario .select-emocao`);
-var listaComentarios = document.getElementById(`comentarios_${idAviso}`);
-var comentario = textarea.value.trim();
-var emocao = selectEmocao.value;
-
-// Validação
-if (comentario.split(" ").length < 5) {
-    alert("Seu comentário deve ter pelo menos 5 palavras!");
-    return;
-}
-if (!emocao) {
-    alert("Selecione uma emoção!");
-    return;
-}
-
-// Simulação de envio para o servidor
-var novoComentario = {
-    texto: comentario,
-    emocao: emocao,
-    autor: sessionStorage.NOME_USUARIO,
-    data: new Date().toLocaleString()
-};
-
-// Adiciona o comentário ao DOM
-var divComentario = document.createElement("div");
-divComentario.className = "comentario";
-divComentario.innerHTML = `<b>${novoComentario.autor}</b> (${novoComentario.data}): <i>${novoComentario.emocao}</i><br>${novoComentario.texto}`;
-listaComentarios.appendChild(divComentario);
-
-// Limpa o formulário
-textarea.value = "";
-selectEmocao.value = "";
-}
-
-
-function deletar(idAviso) {
-    console.log("Criar função de apagar post escolhido - ID" + idAviso);
-    fetch(`/avisos/deletar/${idAviso}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
+        if (!emocao) {
+          alert("Selecione uma emoção!");
+          return false;
         }
-    }).then(function (resposta) {
 
-        if (resposta.ok) {
-            window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            window.location = "/dashboard/mural.html"
-        } else if (resposta.status == 404) {
-            window.alert("Deu 404!");
-        } else {
-            throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
-        }
-    }).catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-    });
-}
+        const novoComentario = {
+          texto: comentario,
+          emocao: emocao,
+          autor: sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo",
+          data: new Date().toLocaleString(),
+        };
 
-function atualizarFeed() {
-    fetch("/avisos/listar").then(function (resposta) {
-        if (resposta.ok) {
-            if (resposta.status == 204) {
-                var feed = document.getElementById("feed_container");
-                var mensagem = document.createElement("span");
-                mensagem.innerHTML = "Nenhum resultado encontrado."
-                feed.appendChild(mensagem);
-                throw "Nenhum resultado encontrado!!";
-            }
+        // Salvar no localStorage
+        let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
+        comentariosSalvos.push(novoComentario);
+        localStorage.setItem('comentarios', JSON.stringify(comentariosSalvos));
 
-            resposta.json().then(function (resposta) {
-                console.log("Dados recebidos: ", JSON.stringify(resposta));
+        // Atualizar a visualização dos comentários
+        renderizarComentarios();
 
-                var feed = document.getElementById("feed_container");
-                feed.innerHTML = "";
-                for (let i = 0; i < resposta.length; i++) {
-                    var publicacao = resposta[i];
+        // Limpar o formulário
+        document.getElementById("form_comentario").reset();
+        return false;
+      }
 
-                    // criando e manipulando elementos do HTML via JavaScript
-                    var divPublicacao = document.createElement("div");
-                    var spanID = document.createElement("span");
-                    var spanTitulo = document.createElement("span");
-                    var spanNome = document.createElement("span");
-                    var divDescricao = document.createElement("div");
-                    var divButtons = document.createElement("div");
-                    var btnEditar = document.createElement("button");
-                    var btnDeletar = document.createElement("button");
+      // Função para renderizar os comentários
+      function renderizarComentarios() {
+        const divComentarios = document.getElementById("comentarios_container");
+        divComentarios.innerHTML = '';
 
+        let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
+        
+        comentariosSalvos.forEach(comentario => {
+          const divComentario = document.createElement("div");
+          divComentario.className = comentario.autor === sessionStorage.getItem("NOME_USUARIO") ? "comentario comentario-usuario" : "comentario";
+          divComentario.innerHTML = `
+            <b>${comentario.autor}</b> (${comentario.data}): <i>${comentario.emocao}</i>
+            <p>${comentario.texto}</p>
+          `;
+          divComentarios.appendChild(divComentario);
+        });
+      }
 
-                    spanID.innerHTML = "ID: <b>" + publicacao.idAviso + "</b>";
-                    spanTitulo.innerHTML = "Título: <b>" + publicacao.titulo + "</b>";
-                    spanNome.innerHTML = "Autor: <b>" + publicacao.nome + "</b>";
-                    divDescricao.innerHTML = "Descrição: <b>" + publicacao.descricao + "</b>";
-                    btnEditar.innerHTML = "Editar";
-                    btnDeletar.innerHTML = "Deletar";
-
-                    divPublicacao.className = "publicacao";
-                    spanTitulo.id = "inputNumero" + publicacao.idAviso;
-                    spanNome.className = "publicacao-nome";
-                    spanTitulo.className = "publicacao-titulo";
-                    divDescricao.className = "publicacao-descricao";
-
-                    divButtons.className = "div-buttons"
-
-                    btnEditar.className = "publicacao-btn-editar"
-                    btnEditar.id = "btnEditar" + publicacao.idAviso;
-                    btnEditar.setAttribute("onclick", `editar(${publicacao.idAviso})`);
-
-                    btnDeletar.className = "publicacao-btn-editar"
-                    btnDeletar.id = "btnDeletar" + publicacao.idAviso;
-                    btnDeletar.setAttribute("onclick", `deletar(${publicacao.idAviso})`);
-
-                    divPublicacao.appendChild(spanID);
-                    divPublicacao.appendChild(spanNome);
-                    divPublicacao.appendChild(spanTitulo);
-                    divPublicacao.appendChild(divDescricao);
-                    divPublicacao.appendChild(divButtons);
-                    divButtons.appendChild(btnEditar);
-                    divButtons.appendChild(btnDeletar);
-                    feed.appendChild(divPublicacao);
-                }
-
-                finalizarAguardar();
-            });
-        } else {
-            throw ('Houve um erro na API!');
-        }
-    }).catch(function (resposta) {
-        console.error(resposta);
-        finalizarAguardar();
-    });
-}
-
-</script> -->
-
-function limparSessao() {
-    sessionStorage.clear();
-    window.location.href = "login.html";
-  }
-
-  function publicarComentario() {
-    const comentario = document.getElementById("textarea_comentario").value.trim();
-    const emocao = document.getElementById("select_emocao").value;
-
-    if (comentario.split(" ").length < 5) {
-      alert("Seu comentário deve ter pelo menos 5 palavras!");
-      return false;
-    }
-
-    if (!emocao) {
-      alert("Selecione uma emoção!");
-      return false;
-    }
-
-    const novoComentario = {
-      texto: comentario,
-      emocao: emocao,
-      autor: sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo",
-      data: new Date().toLocaleString(),
-    };
-
-    const divComentarios = document.getElementById("comentarios_container");
-    const divComentario = document.createElement("div");
-    divComentario.className = "comentario";
-    divComentario.innerHTML = `
-      <b>${novoComentario.autor}</b> (${novoComentario.data}): <i>${novoComentario.emocao}</i>
-      <p>${novoComentario.texto}</p>
-    `;
-    divComentarios.appendChild(divComentario);
-
-    document.getElementById("form_comentario").reset();
-    return false;
-  }
-</script>
-</body>
-
+      // Carregar os comentários ao carregar a página
+      window.onload = function() {
+        renderizarComentarios();
+      };
+    </script>
+  </body>
 </html>
