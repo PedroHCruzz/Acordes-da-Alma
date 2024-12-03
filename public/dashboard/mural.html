@@ -21,6 +21,19 @@
         margin-bottom: 10px;
         border-radius: 5px;
       }
+
+      #emocao-chart {
+       width: 100%; 
+       max-width: 400px;
+       height: 400px; 
+       margin-top: 20px;
+     }
+
+   .fundoGrafico{
+  background-color: rgba(0, 0, 0, 0.8);
+  
+   } 
+
     </style>
   </head>
   <body>
@@ -43,9 +56,8 @@
           <a href="cards.html">Votos</a>
           <a href="mural.html">Comentários</a>
           <a href="public/login.html">Sair</a>
-          <br>
+          
           <h1>Acordes da Alma</h1>
-
           <div class="hello">
             <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
           </div>
@@ -62,83 +74,149 @@
             ></textarea>
             <select id="select_emocao">
               <option value="">Selecione uma emoção</option>
-              <option value="Feliz">Alegria</option>
-              <option value="Triste">Tristeza</option>
-              <option value="Bravo">Êxtase</option>
-              <option value="Animado">Amor</option>
-              <option value="Surpreso">Pensativo</option>
+              <option value="Alegria">Alegria</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Êxtase">Êxtase</option>
+              <option value="Amor">Amor</option>
+              <option value="Pensativo">Pensativo</option>
             </select>
             <button type="submit" class="btn-enviar">Enviar</button>
           </form>
         </div>
         <h2>Comentários</h2>
         <div id="comentarios_container" class="comentarios-container"></div>
+        <div class="fundoGrafico">
+        <h2>Emoções mais escolhidas</h2>
+        <canvas id="emocao-chart" width="500" height="500"></canvas>
       </div>
-  
+      </div>
     </div>
-
- 
     <script>
-      // Função para carregar o nome do usuário na página
-      document.getElementById("b_usuario").textContent = sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo";
+   document.getElementById("b_usuario").textContent = sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo";
 
-      // Função para publicar comentário
-      function publicarComentario() {
-        const comentario = document.getElementById("textarea_comentario").value.trim();
-        const emocao = document.getElementById("select_emocao").value;
+function publicarComentario() {
+  const comentario = document.getElementById("textarea_comentario").value.trim();
+  const emocao = document.getElementById("select_emocao").value;
 
-        if (comentario.split(" ").length < 5) {
-          alert("Seu comentário deve ter pelo menos 5 palavras!");
-          return false;
+  if (comentario.split(" ").length < 5) {
+    alert("Seu comentário deve ter pelo menos 5 palavras!");
+    return false;
+  }
+
+  if (!emocao) {
+    alert("Selecione uma emoção!");
+    return false;
+  }
+
+  const novoComentario = {
+    texto: comentario,
+    emocao: emocao,
+    autor: sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo",
+    data: new Date().toLocaleString(),
+  };
+
+  let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
+  comentariosSalvos.push(novoComentario);
+  localStorage.setItem('comentarios', JSON.stringify(comentariosSalvos));
+
+  renderizarComentarios();
+  atualizarGraficoEmocoes(); 
+
+  document.getElementById("form_comentario").reset();
+  return false;
+}
+
+function renderizarComentarios() {
+  const divComentarios = document.getElementById("comentarios_container");
+  divComentarios.innerHTML = '';
+
+  let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
+  
+  comentariosSalvos.forEach(comentario => {
+    const divComentario = document.createElement("div");
+    divComentario.className = comentario.autor === sessionStorage.getItem("NOME_USUARIO") ? "comentario comentario-usuario" : "comentario";
+    divComentario.innerHTML = `
+      <b>${comentario.autor}</b> (${comentario.data}): <i>${comentario.emocao}</i>
+      <p>${comentario.texto}</p>
+    `;
+    divComentarios.appendChild(divComentario);
+  });
+}
+
+function contarEmocoes() {
+  let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
+  const contagemEmocoes = {
+    Alegria: 0,
+    Tristeza: 0,
+    Êxtase: 0,
+    Amor: 0,
+    Pensativo: 0
+  };
+
+  comentariosSalvos.forEach(comentario => {
+    if (comentario.emocao) {
+      contagemEmocoes[comentario.emocao]++;
+    }
+  });
+
+  return contagemEmocoes;
+}
+
+
+function atualizarGraficoEmocoes() {
+  const contagemEmocoes = contarEmocoes();
+  const ctx = document.getElementById('emocao-chart').getContext('2d');
+
+  const dadosEmocoes = {
+    labels: Object.keys(contagemEmocoes),
+    datasets: [{
+      label: 'Emoções mais escolhidas',
+      data: Object.values(contagemEmocoes),
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)'
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: dadosEmocoes,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return tooltipItem.label + ': ' + tooltipItem.raw + ' comentários';
+            }
+          }
         }
-
-        if (!emocao) {
-          alert("Selecione uma emoção!");
-          return false;
-        }
-
-        const novoComentario = {
-          texto: comentario,
-          emocao: emocao,
-          autor: sessionStorage.getItem("NOME_USUARIO") || "Usuário Anônimo",
-          data: new Date().toLocaleString(),
-        };
-
-        // Salvar no localStorage
-        let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
-        comentariosSalvos.push(novoComentario);
-        localStorage.setItem('comentarios', JSON.stringify(comentariosSalvos));
-
-        // Atualizar a visualização dos comentários
-        renderizarComentarios();
-
-        // Limpar o formulário
-        document.getElementById("form_comentario").reset();
-        return false;
       }
+    }
+  });
+}
 
-      // Função para renderizar os comentários
-      function renderizarComentarios() {
-        const divComentarios = document.getElementById("comentarios_container");
-        divComentarios.innerHTML = '';
 
-        let comentariosSalvos = JSON.parse(localStorage.getItem('comentarios')) || [];
-        
-        comentariosSalvos.forEach(comentario => {
-          const divComentario = document.createElement("div");
-          divComentario.className = comentario.autor === sessionStorage.getItem("NOME_USUARIO") ? "comentario comentario-usuario" : "comentario";
-          divComentario.innerHTML = `
-            <b>${comentario.autor}</b> (${comentario.data}): <i>${comentario.emocao}</i>
-            <p>${comentario.texto}</p>
-          `;
-          divComentarios.appendChild(divComentario);
-        });
-      }
+window.onload = function() {
+  renderizarComentarios();
+  atualizarGraficoEmocoes();  
+};
 
-      // Carregar os comentários ao carregar a página
-      window.onload = function() {
-        renderizarComentarios();
-      };
-    </script>
+</script>
   </body>
 </html>
