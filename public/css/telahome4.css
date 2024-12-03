@@ -15,6 +15,15 @@ body{
     background-color: rgba(0, 0, 0, 0.662);
 }
 
+#background-video {
+    position: fixed; /* Fixa o vídeo no fundo */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100%; /* Ocupa toda a altura da tela */
+    object-fit: cover; /* Faz o vídeo cobrir a tela sem distorção */
+    z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+}
 
 
 .card{
@@ -72,6 +81,9 @@ body{
     height: 100%;
 }
 
+h1 {
+    color: white;
+}
 .main_text{
     position: absolute;
     color: #fff;
