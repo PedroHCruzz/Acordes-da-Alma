@@ -365,11 +365,11 @@ canvas {
   height: 100% !important;
 }
 
-/* PAGINA DOS GRÁFICOS 2023 */
+
 
 .janela {
   display: flex;
-  /* width: 100vw; */
+  
 }
 
 .header-left a {
